@@ -31,5 +31,10 @@ int main(int argc, const char* argv[])
   {
 
   }
+
+  if (mb.get_tiles(0, 0, 0) < 0)
+  {
+
+  }
   return 0;
 }
