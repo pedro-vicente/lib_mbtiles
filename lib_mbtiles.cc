@@ -1,4 +1,9 @@
 #include "lib_mbtiles.hh"
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <io.h>
+#include <stdio.h>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //mbtiles_t::get_tables
@@ -84,7 +89,16 @@ int mbtiles_t::get_tiles(size_t zoom_level, size_t  tile_column, size_t tile_row
 
   while (sqlite3_step(stmt) == SQLITE_ROW)
   {
-  
+    FILE *fp;
+    int col = 0;
+    char name[50];
+    snprintf(name, 20, "tile.%zd.%zd.%zd.png", zoom_level, tile_column, tile_row);
+    if ((fp = fopen(name, "wb")) == NULL)
+    {
+    }
+    fwrite(sqlite3_column_blob(stmt, col), sqlite3_column_bytes(stmt, col), 1, fp);
+    std::cout << name << " " << sqlite3_column_bytes(stmt, col) << " bytes\n";
+    fclose(fp);
   }
 
   sqlite3_finalize(stmt);
