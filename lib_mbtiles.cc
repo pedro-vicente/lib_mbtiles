@@ -1,8 +1,8 @@
 #include "lib_mbtiles.hh"
 #include "sqlite3.h"
-#include <iostream>
 
-int mbtiles_t::read(const std::string &file_name)
+
+int mbtiles_t::get_tables(const std::string &file_name, std::vector<std::string> &tables)
 {
   sqlite3 *db = 0;
   sqlite3_stmt *stmt = 0;
@@ -24,8 +24,7 @@ int mbtiles_t::read(const std::string &file_name)
   while (sqlite3_step(stmt) == SQLITE_ROW)
   {
     std::string table = (const char*)sqlite3_column_text(stmt, 0);
-    std::cout << table.c_str() << "\n";
-
+    tables.push_back(table);
   }
 
   sqlite3_finalize(stmt);
