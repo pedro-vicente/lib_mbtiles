@@ -26,5 +26,10 @@ int main(int argc, const char* argv[])
   {
     std::cout << tables.at(idx) << "\n";
   }
+
+  if (mb.get_metadata() < 0)
+  {
+
+  }
   return 0;
 }
